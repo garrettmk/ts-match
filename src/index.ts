@@ -1,4 +1,2 @@
-/**
- * A single lonely export.
- */
-export default "Hello there."
+export * from './types';
+export * from './matches';
