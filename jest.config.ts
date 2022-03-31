@@ -1,7 +1,8 @@
-export default {
-  moduleNameMapper: {
-    '@/(.*)': '<rootDir>/src/$1'
-  },
+import type { Config } from '@jest/types';
 
-  preset: 'ts-jest'
+const config: Config.InitialOptions = {
+  preset: 'ts-jest',
+  roots: ['<rootDir>/src']
 }
+
+export default config;

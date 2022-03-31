@@ -16,6 +16,8 @@ const operatorMap = {
   none: (a: any[], b: ExpressionFor<any>) => !a.some(item => matches(item, b)),
   keys: (a: object, b: ExpressionFor<keyof typeof a>) => matches(Object.keys(a), b),
   values: (a: object, b: ExpressionFor<any>) => matches(Object.values(a), b),
+  and: (a: any, b: ExpressionFor<any>[]) => matchesAllExpressions(a, b),
+  or: (a: any, b: ExpressionFor<any>[]) => matchesAnyExpression(a, b),
 };
 
 
@@ -25,18 +27,71 @@ const operatorMap = {
  * @returns True the `obj` matches `query`.
  */
 export function matches<T extends any>(item: T, query: ExpressionFor<T>) : boolean {
-  if (Array.isArray(query))
+  if (isImplicitOr(query))
     return matchesAnyExpression(item, query);
 
-  if (typeof query === 'object' && Object.keys(query).length > 1)
-    return matchesAllExpressions(item, query);
+  if (isImplicitAnd(query))
+    return matchesAllExpressions(item, entriesAsObjects(query));
 
   const { operator, rvalue } = parseUnaryExpression(query);
 
   if (operator in operatorMap)
     return applyOperator(operator, item, rvalue);
   else
-    return matches(item[operator], rvalue);  
+    return matches(item[operator as keyof T], rvalue);  
+}
+
+
+/**
+ * Utility for creating a filter function from an expression.
+ * 
+ * @param query 
+ * @returns A filter function.
+ */
+export function withExpression(query: ExpressionFor<any>) : (item: any) => boolean {
+  return (item: any) => matches(item, query);
+};
+
+
+/**
+ * @internal
+ * @param query 
+ * @returns True if the query is an array of expressions.
+ */
+function isImplicitOr(query: ExpressionFor<any>) : query is ExpressionFor<any>[] {
+  return Array.isArray(query);
+}
+
+/**
+ * @internal
+ * @param query 
+ * @returns True if `query` is an object with multiple keys.
+ */
+function isImplicitAnd(query: ExpressionFor<any>) : query is object {
+  return typeof query === 'object' && query !== null && Object.keys(query).length > 1;
+}
+
+/**
+ * Example:
+ * ```typescript
+ * const person = {
+ *  name: 'Weird Al',
+ *  age: 'timeless'
+ * };
+ * 
+ * entriesAsObjects(person);
+ * // [
+ * //   { name: 'Weird Al' },
+ * //   { age: 'timeless' }
+ * // ]
+ * ```
+ * @param obj 
+ * @returns The entries in `obj`, as a list of objects with single key-value pairs.
+ */
+function entriesAsObjects<T extends object, K extends keyof T>(obj: T) : any[] {
+  return Object.entries(obj).map(([key, value]) => ({
+    [key as keyof T]: value as T[K]
+  }));
 }
 
 
@@ -56,9 +111,9 @@ function matchesAnyExpression<T extends any>(item: T, queries: ExpressionFor<T>[
  * @param query A map of keys to expressions.
  * @returns True if `item` is matched by ALL expressions in `queries`
  */
-function matchesAllExpressions<T extends any>(item: T, queries: ExpressionFor<T>) : boolean {
-  return Object.entries(queries).reduce(
-    (result, [operator, expr]) => result && matches(item, { [operator]: expr } as ExpressionFor<any>),
+function matchesAllExpressions<T extends any>(item: T, queries: ExpressionFor<T>[]) : boolean {
+  return queries.reduce(
+    (result, expr) => result && matches(item, expr),
     true as boolean
   );
 }
@@ -89,5 +144,6 @@ function parseUnaryExpression(expression: ExpressionFor<any>) {
  * @returns The result of calling the specified operator with `lvalue` and `rvalue`.
  */
 function applyOperator(operator: string, lvalue: any, rvalue: any) : boolean {
+  // @ts-ignore
   return operatorMap[operator](lvalue, rvalue); 
 }
