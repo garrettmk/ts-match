@@ -4,8 +4,8 @@
 filter or validate any kind of value using simple, declarative JSON. `ts-match` is small, fast and dependency-free!
 
 ## Prerequisites
-  * ESx?
-  * TypeScript 4.x.x ?
+  * TODO: minimum JavaScript version
+  * TODO: minimum TypeScript version
 
 
 ## Installation
@@ -141,9 +141,9 @@ people.filter(withExpression({
 }));                                                    // [{ Alice }, { Bob }]
 ```
 
-## Contributing to <project_name>
+## Contributing to `ts-match`
 <!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
-To contribute to <project_name>, follow these steps:
+To contribute to `ts-match`, follow these steps:
 
 1. Fork this repository.
 2. Create a branch: `git checkout -b <branch_name>`.
@@ -153,21 +153,12 @@ To contribute to <project_name>, follow these steps:
 
 Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
-## Contributors
-
-Thanks to the following people who have contributed to this project:
-
-* [@scottydocs](https://github.com/scottydocs) 📖
-* [@cainwatson](https://github.com/cainwatson) 🐛
-* [@calchuchesta](https://github.com/calchuchesta) 🐛
-
-You might want to consider using something like the [All Contributors](https://github.com/all-contributors/all-contributors) specification and its [emoji key](https://allcontributors.org/docs/en/emoji-key).
 
 ## Contact
 
-If you want to contact me you can reach me at <your_email@address.com>.
+If you want to contact me you can reach me at <garrettmyrick@gmail.com>.
 
 ## License
 <!--- If you're not sure which open license to use see https://choosealicense.com/--->
 
-This project uses the following license: [<license_name>](<link>).
+This project uses the following license: [MIT](https://github.com/garrettmk/ts-match/blob/main/LICENSE).
