@@ -1,5 +1,7 @@
 src
 .devcontainer
+docs
 jest.config.js
+typedoc.json
 tsconfig.json
 *.tgz
