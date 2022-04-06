@@ -1,6 +1,7 @@
-src
 .devcontainer
+.github
 docs
+src
 jest.config.js
 typedoc.json
 tsconfig.json
