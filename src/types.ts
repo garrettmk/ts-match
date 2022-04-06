@@ -70,6 +70,7 @@ export type ObjectExpression<T extends object, K extends keyof T = keyof T> =
   | { keys: ExpressionFor<Array<K>> }
   | { values: ExpressionFor<Array<T[K]>> }
   | { [key in K]?: ExpressionFor<T[key]> }
+  | { escaped: { [key in K]?: ExpressionFor<T[key]> } };
 
 /**
  * A LogicalExpression allows us to combine multiple expressions
