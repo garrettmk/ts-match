@@ -69,8 +69,15 @@ export type ArrayExpression<T extends Array<any>> =
 export type ObjectExpression<T extends object, K extends keyof T = keyof T> =
   | { keys: ExpressionFor<Array<K>> }
   | { values: ExpressionFor<Array<T[K]>> }
-  | { [key in K]?: ExpressionFor<T[key]> }
-  | { escaped: { [key in K]?: ExpressionFor<T[key]> } };
+  | { escaped: ExpressionMap<T> }
+  | ExpressionMap<T>;
+
+/**
+ * A mapping of keys to expressions.
+ */
+export type ExpressionMap<T extends Object, K extends keyof T = keyof T> = {
+  [key in K]?: ExpressionFor<T[key]>
+}
 
 /**
  * A LogicalExpression allows us to combine multiple expressions

@@ -4,9 +4,8 @@
 filter or validate any kind of value using simple, declarative JSON. `tsieve` is small, fast and dependency-free!
 
 ## Prerequisites
-  * TODO: minimum JavaScript version
-  * TODO: minimum TypeScript version
-
+  * JavaScript ES6+
+  * TypeScript 2.8+
 
 ## Installation
 ```
@@ -89,6 +88,7 @@ Expressions can be combined using the `and` and `or` operators:
 | `values`   | ExpressionFor<Array<any>> | Check an object's values
 | `and`      | ExpressionFor<any>[]      | Match every expression
 | `or`       | ExpressionFor<any>[]      | Match any expression
+| `escaped`  | ExpressionMap<object>     | Do not interpret any key of the r-value as an operator
 
 ## Examples
 ```typescript
