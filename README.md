@@ -1,7 +1,7 @@
-# tsieve
+# ts-match
 
-`tsieve` is a versatile pattern-matching library, written in TypeScript. You can use it to easily 
-filter or validate any kind of value using simple, declarative JSON. `tsieve` is small, fast and dependency-free!
+`ts-match` is a versatile pattern-matching library, written in TypeScript. You can use it to easily 
+filter or validate any kind of value using simple, declarative JSON. `ts-match` is small, fast and dependency-free!
 
 ## Prerequisites
   * JavaScript ES6+
@@ -9,13 +9,13 @@ filter or validate any kind of value using simple, declarative JSON. `tsieve` is
 
 ## Installation
 ```
-npm install tsieve
+npm install ts-match
 ```
 
 ## Usage
 Import `matches` and/or `withExpression`, define an expression, and start matching (or filtering):
 ```typescript
-import { matches, withExpression } from 'tsieve';
+import { matches, withExpression } from 'ts-match';
 
 const peopleWithCats = {
   pets: {
@@ -92,7 +92,7 @@ Expressions can be combined using the `and` and `or` operators:
 
 ## Examples
 ```typescript
-import { matches, withExpression } from 'tsieve';
+import { matches, withExpression } from 'ts-match';
 
 const numbers = [0, 1, 2, 3, 4];
 const strings = ['foo', 'bar', 'baz'];
@@ -141,9 +141,9 @@ people.filter(withExpression({
 }));                                                    // [{ Alice }, { Bob }]
 ```
 
-## Contributing to `tsieve`
+## Contributing to `ts-match`
 <!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
-To contribute to `tsieve`, follow these steps:
+To contribute to `ts-match`, follow these steps:
 
 1. Fork this repository.
 2. Create a branch: `git checkout -b <branch_name>`.
@@ -161,4 +161,4 @@ If you want to contact me you can reach me at <garrettmyrick@gmail.com>.
 ## License
 <!--- If you're not sure which open license to use see https://choosealicense.com/--->
 
-This project uses the following license: [MIT](https://github.com/garrettmk/tsieve/blob/main/LICENSE).
+This project uses the following license: [MIT](https://github.com/garrettmk/ts-match/blob/main/LICENSE).
