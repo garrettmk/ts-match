@@ -18,15 +18,16 @@ const operatorMap = {
   values: (a: object, b: ExpressionFor<any>) => matches(Object.values(a), b),
   and: (a: any, b: ExpressionFor<any>[]) => matchesAllExpressions(a, b),
   or: (a: any, b: ExpressionFor<any>[]) => matchesAnyExpression(a, b),
+  escaped: (a: any, b: ExpressionFor<any>) => matches(a, b, true)
 };
 
 
 /**
  * @param item The object to test
  * @param query The match expression
- * @returns True the `obj` matches `query`.
+ * @returns True if `obj` matches `query`.
  */
-export function matches<T extends any>(item: T, query: ExpressionFor<T>) : boolean {
+export function matches<T extends any>(item: T, query: ExpressionFor<T>, escaped: boolean = false) : boolean {
   if (isImplicitOr(query))
     return matchesAnyExpression(item, query);
 
@@ -35,11 +36,12 @@ export function matches<T extends any>(item: T, query: ExpressionFor<T>) : boole
 
   const { operator, rvalue } = parseUnaryExpression(query);
 
-  if (operator in operatorMap)
+  if (operator in operatorMap && !escaped)
     return applyOperator(operator, item, rvalue);
   else
     return matches(item[operator as keyof T], rvalue);  
 }
+
 
 
 /**

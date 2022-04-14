@@ -2,7 +2,7 @@
 .github
 docs
 src
-jest.config.js
+jest.config.ts
 typedoc.json
 tsconfig.json
 *.tgz

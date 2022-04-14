@@ -1,4 +1,5 @@
 import { matches, withExpression } from "../matches";
+import { ExpressionFor } from "../types";
 
 
 describe('testing number operators', () => {
@@ -140,6 +141,64 @@ describe('testing logical operators', () => {
     ${[ { foo: 'baz' }, { baz: 1 } ]}           | ${false}
   `(`returns $expected when matching ${JSON.stringify(item)} with $expression`, ({ expression, expected }) => {
     expect(matches(item, expression)).toBe(expected);
+  });
+});
+
+
+describe('testing operator escaping', () => {
+  const item = {
+    includes: 'hello'
+  };
+
+  it('should correctly match the object when using escaped', () => {
+    expect(matches(item, {
+      escaped: { includes: { re: /HELLO/i } }
+    })).toBe(true);
+  });
+
+  it('should throw an error when not using escaped', () => {
+    expect(() => matches(item, {
+      includes: { re: /HELLO/i }
+    })).toThrow();
+  });
+
+  it('should match nested fields when using escaped', () => {
+    const person = {
+      name: 'bob',
+      hobbies: {
+        includes: 'dancing'
+      }
+    };
+
+    const expression = {
+      hobbies: {
+        escaped: {
+          includes: 'dancing'
+        }
+      }
+    };
+
+    expect(matches(person, expression)).toBe(true);
+  });
+
+  it('should only escape keys one level deep', () => {
+    const person = {
+      and: {
+        things: [{ foo: 'bar' }]
+      }
+    };
+
+    const expression = {
+      escaped: {
+        and: {
+          things: {
+            includes: { foo: 'bar' }
+          }
+        }
+      }
+    };
+
+    expect(matches(person, expression)).toBe(true);
   });
 });
 
