@@ -9,7 +9,7 @@ filter or validate any kind of value using simple, declarative JSON. `ts-match` 
 
 ## Installation
 ```
-npm install ts-match
+npm install @garrettmk/ts-match
 ```
 
 ## Usage
