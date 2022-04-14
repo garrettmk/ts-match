@@ -10,8 +10,7 @@
   "sideEffects": false,
   "scripts": {
     "test": "jest",
-    "build": "tsc && typedoc",
-    "publish": "npm publish"
+    "build": "tsc && typedoc"
   },
   "repository": {
     "type": "git",
