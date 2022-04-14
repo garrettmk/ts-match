@@ -1,6 +1,6 @@
 {
   "name": "@garrettmk/ts-match",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Match objects using declarative JSON.",
   "publishConfig": {
     "access": "public"
